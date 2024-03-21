@@ -1,26 +1,66 @@
 var currentQuestionIndex = 0;
 var mathQuestionListLength =0
 var correctAnswerCount=0
+var gameMode = ''
+var selectedQuestionCount = 10
+var mathQuestionList = []
 
 $(document).ready(function (){
 	
-	const originalArray = getRandomQuestionAndAnswer()
-	const rand = getRandomElements(originalArray,10)
-	const mathQuestionList= rand.map(o=>{
-		o.otherOptions = shuffleArray(o.otherOptions)
-		return o;
+	const gameModeSection = document.getElementById('gameModeSection');
+	const quizSection = document.getElementById('quizSection');
+	const modeSelection = document.getElementById('mode-selection');
+	const options = document.getElementById('options');
+	const timedOptions = document.getElementById('timed-options');
+	const questionCountOptions = document.getElementById('question-count-options');
+	
+	const timedModeButton = document.getElementById('timed-mode');
+	const questionCountModeButton = document.getElementById('question-count-mode');
+	
+	timedModeButton.addEventListener('click', function() {
+		gameMode ='timeout'
+		modeSelection.classList.add('hidden');
+		options.classList.remove('hidden');
+		timedOptions.classList.remove('hidden');
+	});
+	
+	questionCountModeButton.addEventListener('click', function() {
+		gameMode ='question'
+		modeSelection.classList.add('hidden');
+		options.classList.remove('hidden');
+		questionCountOptions.classList.remove('hidden');
+	});
+	
+	$('#timed-options button').click(function (event){
+		
+		var timeoutValue =  parseInt($(this).text().split(' ')[0])
+		const originalArray = getRandomQuestionAndAnswer('easy')
+		const rand = getRandomElements(originalArray,timeoutValue*2)
+		mathQuestionList= rand.map(o=>{
+			o.otherOptions = shuffleArray(o.otherOptions)
+			return o;
+		})
+		createQuestionCard(mathQuestionList[currentQuestionIndex])
+		updateQuestionCountProgress()
+		gameModeSection.classList.add('hidden');
+		quizSection.classList.remove('hidden');
+		setTimeout(timeoutHandler,timeoutValue*1000)
 	})
-	mathQuestionListLength = mathQuestionList.length
 	
-	createQuestionCard(mathQuestionList[currentQuestionIndex])
-	updateQuestionCountProgress()
-	
-	$('#preQuizBtn').click(function (e){
-		if(currentQuestionIndex>0){
-			currentQuestionIndex--;
-			createQuestionCard(mathQuestionList[currentQuestionIndex])
-			updateQuestionCountProgress()
-		}
+	$('#question-count-options button').click(function (event){
+		selectedQuestionCount = parseInt($(this).text().split(' ')[0])
+		const originalArray = getRandomQuestionAndAnswer()
+		const rand = getRandomElements(originalArray,selectedQuestionCount)
+		mathQuestionList= rand.map(o=>{
+			o.otherOptions = shuffleArray(o.otherOptions)
+			return o;
+		})
+		mathQuestionListLength = mathQuestionList.length
+		
+		createQuestionCard(mathQuestionList[currentQuestionIndex])
+		updateQuestionCountProgress()
+		gameModeSection.classList.add('hidden');
+		quizSection.classList.remove('hidden');
 	})
 	
 	$('#nextQuizBtn').click(function (e){
@@ -75,6 +115,14 @@ $(document).ready(function (){
 		window.location.reload()
 	})
 })
+
+function timeoutHandler(){
+	$('#quizSection').hide()
+	$('#resultHeader').text(`You scored ${correctAnswerCount}`)
+	$('#resultMessage').text(getResultMessage(correctAnswerCount))
+	$('#resultSection').show()
+	celebrate()
+}
 
 function createQuestionCard(cardData){
 	

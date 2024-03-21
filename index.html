@@ -22,7 +22,38 @@
 </nav>
 
 
+<div id="gameModeSection" class="m-10 max-w-md mx-auto p-8 bg-white rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold mb-4 text-center">Select Game Mode</h1>
+    <div id="mode-selection">
+        <div class="mb-6">
+            <h2 class="text-lg font-semibold mb-2">Timed Challenge Mode</h2>
+            <button id="timed-mode" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Select Timed Challenge Mode</button>
+        </div>
+        <div>
+            <h2 class="text-lg font-semibold mb-2">Question Count Mode</h2>
+            <button id="question-count-mode" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Select Question Count Mode</button>
+        </div>
+    </div>
 
+    <div id="options" class="hidden">
+        <div id="timed-options" class="mb-6 hidden">
+            <h2 class="text-lg font-semibold mb-2">Timed Challenge Mode Options</h2>
+            <div class="flex justify-center space-x-4">
+                <button class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">20 sec</button>
+                <button class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">30 sec</button>
+                <button class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">60 sec</button>
+            </div>
+        </div>
+        <div id="question-count-options" class="hidden">
+            <h2 class="text-lg font-semibold mb-2">Question Count Mode Options</h2>
+            <div class="flex justify-center space-x-4">
+                <button class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">10 questions</button>
+                <button class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">20 questions</button>
+                <button class="py-2 px-4 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">30 questions</button>
+            </div>
+        </div>
+    </div>
+</div>
 <section id="resultSection" class="hidden w-full py-6 md:py-12">
     <div class="container flex flex-col items-center justify-center space-y-4 px-4 md:px-6">
         <div class="flex flex-col items-center justify-center space-y-2 text-center">
@@ -49,7 +80,7 @@
         </div>
     </div>
 </section>
-<div id="quizSection">
+<div id="quizSection" class="hidden">
     <div class="container mx-auto my-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <header class="flex justify-between items-center p-4 md:p-6">
             <div class="flex items-center space-x-2">
