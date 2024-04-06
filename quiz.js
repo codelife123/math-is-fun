@@ -2,8 +2,10 @@ var currentQuestionIndex = 0;
 var mathQuestionListLength =0
 var correctAnswerCount=0
 var gameMode = ''
+var gameSubMode = ''
 var selectedQuestionCount = 10
 var mathQuestionList = []
+var selectedPlayer = localStorage.getItem('SELECTED_PLAYER') || 'GUEST'
 
 $(document).ready(function (){
 	
@@ -34,6 +36,7 @@ $(document).ready(function (){
 	$('#timed-options button').click(function (event){
 		
 		var timeoutValue =  parseInt($(this).text().split(' ')[0])
+		gameSubMode = timeoutValue
 		const originalArray = getRandomQuestionAndAnswer('easy')
 		const rand = getRandomElements(originalArray,timeoutValue*2)
 		mathQuestionList= rand.map(o=>{
@@ -49,6 +52,7 @@ $(document).ready(function (){
 	
 	$('#question-count-options button').click(function (event){
 		selectedQuestionCount = parseInt($(this).text().split(' ')[0])
+		gameSubMode = selectedQuestionCount
 		const originalArray = getRandomQuestionAndAnswer()
 		const rand = getRandomElements(originalArray,selectedQuestionCount)
 		mathQuestionList= rand.map(o=>{
@@ -114,6 +118,8 @@ $(document).ready(function (){
 	$('#homeButton').click(function (e){
 		window.location.reload()
 	})
+	
+	addUserSwitchEventListener()
 })
 
 function timeoutHandler(){
@@ -215,6 +221,7 @@ function celebrate() {
 		confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
 		confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
 	}, 250);
+	performPostActions()
 }
 
 function getResultMessage(correctAnswerCount){
@@ -304,4 +311,48 @@ function getRandomQuestionAndAnswer(mode='easy'){
 	}
 	
 	return  newArray;
+}
+
+function addUserSwitchEventListener(){
+	const userIcon = document.querySelector('#user-menu-button')
+	userIcon.addEventListener('click', function() {
+		if(document.querySelector('#user-selection-menu').classList.contains('hidden')){
+			document.querySelector('#user-selection-menu').classList.remove('hidden')
+		}
+		else {
+			document.querySelector('#user-selection-menu').classList.add('hidden')
+		}
+	});
+	
+	const playerNameList = JSON.parse(localStorage.getItem('PLAYER_NAME_LIST')) ||{}
+	const userSelectionHtml = Object.values(playerNameList).map((p,index)=>{
+		return `<a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-${index}">${p.playerName}</a>`
+	}).join('')
+	$('#user-selection-menu').html(userSelectionHtml)
+	$('#user-selection-menu').on('click','a',function (event){
+		
+		selectedPlayer = event.target.innerText
+		localStorage.getItem('SELECTED_PLAYER',selectedPlayer)
+	})
+	
+}
+
+function performPostActions(){
+	const game = {
+		playerName: selectedPlayer,
+		gameMode: gameMode,
+		gameSubMode:gameSubMode,
+		date: new Date(),
+		score: correctAnswerCount
+	}
+	const gameList = JSON.parse(localStorage.getItem('GAME_LIST')) || []
+	gameList.push(game)
+	localStorage.setItem('GAME_LIST',JSON.stringify(gameList))
+	
+	const playerNameList = JSON.parse(localStorage.getItem('PLAYER_NAME_LIST')) || {}
+	if(playerNameList[selectedPlayer]){
+		playerNameList[selectedPlayer].points += correctAnswerCount
+		localStorage.setItem('PLAYER_NAME_LIST',JSON.stringify(playerNameList))
+	}
+	
 }

@@ -5,39 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Attempt History</title>
     <link rel="stylesheet" href="tailwind.min.css">
+    <script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="history.js" ></script>
 </head>
-<body>
+<body class="bg-gray-400">
 <nav class="bg-green-400 p-4">
     <div class="container mx-auto flex justify-between items-center">
-        <h1 class="text-white font-bold text-2xl">English is fun</h1>
+        <h1 class="text-white font-bold text-2xl">Math is fun</h1>
         <ul class="flex space-x-4 text-white">
-            <li><a href="#" class="hover:text-gray-200">Home</a></li>
-            <li><a href="/history.html" class="hover:text-gray-200">History</a></li>
-            <li><a href="#" class="hover:text-gray-200">Settings</a></li>
+            <li><a href="index.html" class="hover:text-gray-200">Home</a></li>
+            <li><a href="history.html" class="hover:text-gray-200">History</a></li>
+            <li><a href="settings.html" class="hover:text-gray-200">Settings</a></li>
         </ul>
+
     </div>
 </nav>
-<div class="container mx-auto py-8">
-    <h1 class="text-2xl font-bold mb-4">Quiz Attempt History</h1>
-    <table class="table-auto w-full">
-        <thead>
-        <tr>
-            <th class="px-4 py-2">Attempt Date</th>
-            <th class="px-4 py-2">Marks</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td class="border px-4 py-2">2024-03-01</td>
-            <td class="border px-4 py-2">8/10</td>
-        </tr>
-        <tr>
-            <td class="border px-4 py-2">2024-03-05</td>
-            <td class="border px-4 py-2">7/10</td>
-        </tr>
-        <!-- Add more rows dynamically from your data -->
-        </tbody>
-    </table>
+<div class="container mx-auto py-8 px-4">
+
+    <div class="bg-white p-8 rounded-xl ">
+        <h1 class="text-2xl font-bold mb-4">Highest Score</h1>
+        <div id="time-sub-option" class="py-1 px-1 bg-gray-200 inline-block rounded">
+            <button class="bg-white py-1 px-3 rounded hover:bg-white">20 sec</button>
+            <button class="py-1 px-3 rounded hover:bg-white">30 sec</button>
+            <button class="py-1 px-3 rounded hover:bg-white">60 sec</button>
+        </div>
+        <div id="question-sub-option" class="hidden py-1 px-1 bg-gray-200 inline-block rounded">
+            <button class="bg-white py-1 px-3 rounded hover:bg-white">20</button>
+            <button class="py-1 px-3 rounded hover:bg-white">30</button>
+            <button class="py-1 px-3 rounded hover:bg-white">60</button>
+        </div>
+        <table id="highest-score-table" class="table-auto w-full mt-2">
+            <thead>
+            <tr>
+                <th class="px-4 py-2">Player</th>
+                <th class="px-4 py-2">Attempt Date</th>
+                <th class="px-4 py-2">Score</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
 </div>
 </body>
 </html>
