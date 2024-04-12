@@ -333,6 +333,9 @@ function addUserSwitchEventListener(){
 		
 		selectedPlayer = event.target.innerText
 		localStorage.getItem('SELECTED_PLAYER',selectedPlayer)
+		document.querySelector('#user-selection-menu').classList.add('hidden')
+		document.querySelector('#playerName').innerText = 'Player: '+selectedPlayer
+		
 	})
 	
 }

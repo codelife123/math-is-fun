@@ -5,13 +5,17 @@ $(document).ready(function (){
 	
 	$('#time-sub-option button').click(function (event){
 		const timeVal = parseInt(event.target.innerText.split(' ')[0])
-		const data = gameList.filter(g=>g.gameMode=='timeout' && g.gameSubMode==timeVal)
+		const data = gameList.filter(g=>g.gameMode=='timeout' && g.gameSubMode==timeVal).sort((a,b)=>{
+			return b.score - a.score
+		})
 		renderTable(data)
 	})
 	
 	$('#question-sub-option button').click(function (event){
 		const questionVal = event.target.innerText
-		const data = gameList.filter(g=>g.gameMode=='question' && g.gameSubMode==questionVal)
+		const data = gameList.filter(g=>g.gameMode=='question' && g.gameSubMode==questionVal).sort((a,b)=>{
+			return b.score - a.score
+		})
 		renderTable(data)
 	})
 	
@@ -20,7 +24,9 @@ $(document).ready(function (){
 
 
 function initialLoad(){
-	const data = gameList.filter(g=>g.gameMode=='timeout' && g.gameSubMode==20)
+	const data = gameList.filter(g=>g.gameMode=='timeout' && g.gameSubMode==20).sort((a,b)=>{
+		return b.score - a.score
+	})
 	renderTable(data)
 }
 function renderTable(data){
